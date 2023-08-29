@@ -3,16 +3,14 @@ import "../login.css"
 function Login(){
     return(
 <div className='hle'>
-
-
       <section className="ftco-section">
         <div className="container">
-          <div className="row justify-content-center">
+          <div className="row1 justify-content-center">
             <div className="col-md-6 text-center mb-5">
               <h1 className="heading-section">LOGIN</h1>
             </div>
           </div>
-          <div className="row justify-content-center">
+          <div className="row1 justify-content-center">
             <div className="col-md-6 col-lg-4">
               <div className="login-wrap p-0">
                 <h3 className="mb-4 text-center">Have an account?</h3>

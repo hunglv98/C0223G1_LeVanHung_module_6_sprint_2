@@ -1,0 +1,75 @@
+
+.yellow-button {
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 50px;
+    height: 50px;
+    background-color: #FFC400FF;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 10px;
+
+}
+
+.eco-button {
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 50px;
+    height: 50px;
+    background-color: royalblue;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 10px;
+}
+.gray-button{
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 10px;
+}
+.pink-button{
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 50px;
+    height: 50px;
+    background-color: pink;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 10px;
+}
+.row{
+    margin-bottom: 20px;
+}
+h6{
+    text-align: center;
+}
+.phandau{
+    text-align: center;
+    background-color: gray;
+    color: white;
+}
+
+.yellow-button:hover{
+    background-color: royalblue;
+}
+.list{
+    background-color: white;
+}
