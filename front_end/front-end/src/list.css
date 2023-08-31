@@ -1,3 +1,47 @@
+.ghetrong{
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 20px;
+    height: 20px;
+    background-color: #FFC400FF;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 5px;
+}
+
+.ghedachon{
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 20px;
+    height: 20px;
+    background-color: royalblue;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 5px;
+}
+
+.ghedadat{
+    justify-content: center;
+    align-items: center;
+    /* Các thuộc tính khác để tùy chỉnh nút */
+    width: 20px;
+    height: 20px;
+    background-color: gray;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    margin: 3px 3px 3px 3px;
+    border-radius: 5px;
+}
+
+
 
 .yellow-button {
     /*display: flex;*/

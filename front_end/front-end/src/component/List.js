@@ -141,15 +141,15 @@ function List() {
             </div>
             <div className="row">
                 <div className="col-2">
-                    <button className="yellow-button" />
+                    <button className="ghetrong" />
                     <span>Ghế Trống</span>
                 </div>
                 <div className="col-2">
-                    <button className="eco-button" />
+                    <button className="ghedachon" />
                     <span>Ghế Đang Chọn </span>
                 </div>
                 <div className="col-2">
-                    <button className="gray-button" />
+                    <button className="ghedadat" />
                     <span>Ghế Đã Đặt</span>
                 </div>
             </div>
