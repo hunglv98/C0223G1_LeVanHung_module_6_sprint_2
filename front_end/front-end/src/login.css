@@ -24,7 +24,8 @@ h2 {
   font-size: 20px; }
 
 .half, .half .container > .row {
-  height: 100vh; }
+  height: 140vh; 
+}
 
 @media (max-width: 991.98px) {
   .half .bg {
@@ -48,7 +49,7 @@ h2 {
       border-bottom-left-radius: 7px;
       border-bottom-right-radius: 7px; }
     .half .contents .form-group label, .half .bg .form-group label {
-      font-size: 12px;
+      font-size: 20px;
       display: block;
       margin-bottom: 0;
       color: #b3b3b3; }

@@ -9,6 +9,8 @@ import Login from './component/Login';
 import List from './component/List';
 import Footer from './component/Footer';
 import Header from './component/Header';
+import Signup from './component/Signup';
+import DetailSeat from './component/DetailSeat';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +19,10 @@ root.render(
     <Routes>
       <Route path='/' element={<Content />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/list' element={<List />} />
+      <Route path='/list/:idSchedule' element={<List />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/detail/:listId' element={<DetailSeat />} />
+
     </Routes>
     <Footer />
   </BrowserRouter>

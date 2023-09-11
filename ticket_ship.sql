@@ -89,6 +89,21 @@ CREATE TABLE `module_6_sprint_2`.`ticket` (
     FOREIGN KEY (`id_customer`)
     REFERENCES `module_6_sprint_2`.`customer` (`id_customer`)
   );
+  
+  insert into ship(name_ship)
+  values("HLE Yatch");
+CREATE TABLE `module_6_sprint_2`.`schedule` (
+  `id_schedule` INT NOT NULL AUTO_INCREMENT,
+  `time_departure` time NOT NULL,
+  `date_departure` date NOT NULL,
+  `id_ship` INT NULL,
+  PRIMARY KEY (`id_schedule`),
+    FOREIGN KEY (`id_ship`)
+    REFERENCES `module_6_sprint_2`.`ship` (`id_ship`)
+);
+
+ insert into `module_6_sprint_2`.`schedule`(`time_departure`, `date_departure`, `id_ship`)
+  values(now(),now(),1),('2023-12-09','09:09',1);
 
 
 

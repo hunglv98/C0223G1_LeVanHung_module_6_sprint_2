@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "../content.css"
 import logo from "../images/logo.png"
 import usericon from "../images/user-icon.png"
@@ -15,10 +15,53 @@ import youtube from "../images/youtube.png"
 import call from "../images/call.png"
 import location from "../images/location.png"
 import mail from "../images/mail.png"
+import { getListDate, getListTime, getScheduleByDateAndTime } from '../service/ScheduleService';
+import { getSeatSearch } from '../service/SeatService';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Content(){
+  // const [dates,setDate] = useState()
+    // const getDate = async() =>{
+  //   try{
+  //     const data = await getListDate();
+  //   // setDate(data)
+  //   }catch(error){
+  //     console.error();
+  //   }
+  // }
+  const navigate = useNavigate()
+  const [times,setTime] = useState([])
+  const getTime = async() =>{
+    try{
+      const data = await getListTime();
+     setTime(data)
+    }catch(error){
+      console.error();
+    }
+  }
+  useEffect(()=>{
+    window.scrollTo(0,0)
+    getTime()
+  },[])
+const search =async () =>{
+  const time = document.getElementById("inputTime").value
+  const date = document.getElementById("inputDate").value
+  try{
+    const idschedule =await getScheduleByDateAndTime(date,time)
+    navigate(`/list/${idschedule}`)
+  }catch(error){
+    Swal.fire({
+      icon:"error",
+      title:"Không tìm thấy lịch chạy này",
+      showConfirmButton:false,
+      timer:2000
+    })
+  }
+}
+
     return(
             <div className='content1'>
               <div className="hero_area">
@@ -102,44 +145,34 @@ function Content(){
                           cho phép bạn tìm kiếm theo ngày, giờ phù hợp với nhu cầu của bạn
                         </p>
                       </div>
-                      <form>
+                      <div className='form'>
                         
                         <div className="row">
                           <div className='col-lg-2'></div>
                           <div className="form-group col-lg-4">
-                            <label htmlFor="inputDate">Ngày khởi hành</label>
-                            <input type="date" className="form-control" id="inputDate" placeholder="1234 Main St" />
+                            <label htmlFor="inputDate" style={{"color":"black"}}>Ngày khởi hành</label>
+                            <input type="date" className="form-control" id="inputDate" placeholder="1234 Main St" 
+                            min={new Date().toISOString().split('T')[0]}/>
                           </div>
                           <div className="form-group col-lg-4">
-                            <label htmlFor="inputPrice">Giờ khởi hành</label>
-                            <input type="text" className="form-control" id="inputPrice" placeholder="1234 Main St" />
+                            <label htmlFor="inputPrice" style={{"color":"black"}}>Giờ khởi hành</label>
+                            <select type="text" className="form-control" id="inputTime" placeholder="1234 Main St" >
+                              <option value="">-Chọn giờ khởi hành-</option>
+                              {times.length >0 && times.map((i,index)=>{
+                                return(
+                                  <option key={index} value={i}>{i}</option>
+                                )
+                              })}
+                            </select>
                           </div>
-                          {/* <div className="form-group col-lg-4">
-                            <label htmlFor="inputPhone">Phone Number</label>
-                            <input type="text" className="form-control" id="inputPhone" />
-                          </div> */}
-                        </div>
-                        <div className="row">
-                        <div className='col-lg-2'></div>
-                          <div className="form-group col-lg-4" style={{"margin":"0px"}}>
-                            <label htmlFor="inputAddress1">Giờ khởi hành</label>
-                            <input type="text" className="form-control" id="inputAddress1" placeholder="1234 Main St" />
-                          </div>
-                          <div className="form-group col-lg-4">
-                            <label htmlFor="inputAddress2">To</label>
-                            <input type="text" className="form-control" id="inputAddress2" placeholder="1234 Main St" />
-                          </div>
-                          {/* <div className="form-group col-lg-4">
-                            <label htmlFor="inputEmail4">Email</label>
-                            <input type="email" className="form-control" id="inputEmail4" />
-                          </div> */}
-                          
-                        </div>
-                        <div className="d-flex justify-content-center">
-                          <button type="submit" className="btn ">Đặt ngay</button>
+                        
                         </div>
                         
-                      </form>
+                        <div className="d-flex justify-content-center">
+                          <button className="btn btn-primary" onClick={()=>search()}>Đặt ngay</button>
+                        </div>
+                        
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -472,206 +505,10 @@ function Content(){
                       </div>
                     </div>
                   </div>
-                  {/* <div className="carousel_btn-container">
-                    <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                      <span className="prev-icon" aria-hidden="true" />
-                      <span className="sr-only">Previous</span>
-                    </a>
-                    <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                      <span className="next-icon" aria-hidden="true" />
-                      <span className="sr-only">Next</span>
-                    </a>
-                  </div> */}
+            
                 </div>
               </section>
-              {/* end client section */}
-              {/* info section */}
-                {/* <section className="info_section ">
-                  <div className="info_container layout_padding-top">
-                    <div className="container">
-                      <div className="heading_container">
-                        <h2>
-                          Contact Us
-                        </h2>
-                      </div>
-                      <div className="info_logo">
-                        <img src={logo} alt="" />
-                      </div>
-                      <div className="info_top">
-                        <div className="info_form">
-                          <form action>
-                            <input type="text" id="email2" placeholder="Enter Your Email" />
-                            <button>
-                              subscribe
-                            </button>
-                          </form>
-                        </div>
-                        <div className="social_box">
-                          <a href="#">
-                            <img src={facebook} alt="" />
-                          </a>
-                          <a href="#">
-                            <img src={twitter} alt="" />
-                          </a>
-                          <a href="#">
-                            <img src={linkedin} alt="" />
-                          </a>
-                          <a href="#">
-                            <img src={instagram} alt="" />
-                          </a>
-                          <a href="#">
-                            <img src={youtube} alt="" />
-                          </a>
-                        </div>
-                      </div>
-                      <div className="info_main">
-                        <div className="row">
-                          <div className="col-md-3">
-                            <h5>
-                              About Us
-                            </h5>
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            </p>
-                          </div>
-                          <div className="col-md-3 col-lg-2 offset-lg-1">
-                            <h5>
-                              Information
-                            </h5>
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  There are many
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  variations of pas
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  sages of Lorem
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  Ipsum available,
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  but the majority
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="col-md-3">
-                            <div className="info_link-box">
-                              <h5>
-                                Helpful Links
-                              </h5>
-                              <ul>
-                                <li className=" active">
-                                  <a className href="index.html">Home <span className="sr-only">(current)</span></a>
-                                </li>
-                                <li className>
-                                  <a className href="about.html">About </a>
-                                </li>
-                                <li className>
-                                  <a className href="package.html">Packages </a>
-                                </li>
-                                <li className>
-                                  <a className href="testimonial.html">Testimonial </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div className="col-md-3 col-lg-2 offset-lg-1">
-                            <h5>
-                              Supported
-                            </h5>
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  There are many
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  variations of pas
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  sages of Lorem
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  Ipsum available,
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  but the majority
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-9 col-md-10 mx-auto">
-                          <div className="info_contact layout_padding2">
-                            <div className="row">
-                              <div className="col-md-5">
-                                <a href="#" className="link-box">
-                                  <div className="img-box">
-                                    <img src={call} alt="" />
-                                  </div>
-                                  <div className="detail-box">
-                                    <h6>
-                                      Call Now &nbsp; &nbsp; +01 123467890
-                                    </h6>
-                                  </div>
-                                </a>
-                              </div>
-                              <div className="col-md-2">
-                                <a href="#" className="link-box">
-                                  <div className="img-box">
-                                    <img src={location} alt="" />
-                                  </div>
-                                  <div className="detail-box">
-                                    <h6>
-                                      Location
-                                    </h6>
-                                  </div>
-                                </a>
-                              </div>
-                              <div className="col-md-5">
-                                <a href="#" className="link-box">
-                                  <div className="img-box">
-                                    <img src={mail} alt="" />
-                                  </div>
-                                  <div className="detail-box">
-                                    <h6>
-                                      demo@gmail.com
-                                    </h6>
-                                  </div>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section> */}
-              {/* end info section */}
-              {/* footer section */}
-              
-              {/* footer section */}
+          
             </div>
           );
         }
