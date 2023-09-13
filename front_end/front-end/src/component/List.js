@@ -70,30 +70,39 @@ function List() {
     };
 
     const getListId = () => {
-        Swal.fire({
-            icon:"warning",
-            title:"Xác nhận thông tin đặt vé",
-            text:"Bạn có muốn tiếp tục đến thanh toán không?",
-            showCancelButton:true,
-            confirmButtonText:"Xác nhận",
-            cancelButtonText:"Hủy"
-        }).then(async(res)=>{
-            if (res.isConfirmed){
-                if(listId.length<1){
-                    Swal.fire({
-                        icon:"error",
-                        title:"Bạn chưa chọn ghế!",
-                        timer:2000,
-                        showConfirmButton:false
-                    })
-                }else{
-                navigate(`/detail/${listId}`)
-                }
-                          
-            }else if(res.dismiss === Swal.DismissReason.cancel){
+        if (localStorage.getItem("username") != null) {
+            Swal.fire({
+                icon: "warning",
+                title: "Xác nhận thông tin đặt vé",
+                text: "Bạn có muốn tiếp tục đến thanh toán không?",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy"
+            }).then(async (res) => {
+                if (res.isConfirmed) {
+                    if (listId.length < 1) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Bạn chưa chọn ghế!",
+                            timer: 2000,
+                            showConfirmButton: false
+                        })
+                    } else {
+                        navigate(`/detail/${listId}`)
+                    }
 
-            }
-        })
+                } else if (res.dismiss === Swal.DismissReason.cancel) {
+
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: "warning",
+                title: "Mời bạn đăng nhập trước khi đặt ghế.",
+                timer: 2000,
+                showConfirmButton: false
+            })
+        }
     }
 
     return (
@@ -204,21 +213,28 @@ function List() {
                     </div>
                     <div className="row">
                         <div className="col-2">
-                            <button className="ghetrong" />
-                            <span>Ghế Trống</span>
+                        
                         </div>
-                        <div className="col-2">
-                            <button className="ghedachon" />
-                            <span>Ghế Đang Chọn </span>
+                        <div className="col-7">
+                            <div className='row'>
+                                <div className="col-4">
+                                    <button className="ghetrong" />
+                                    <span>Ghế Trống</span>
+                                </div>
+                                <div className="col-4">
+                                    <button className="ghedachon" />
+                                    <span>Ghế Đang Chọn </span>
+                                </div>
+                                <div className="col-4">
+                                    <button className="ghedadat" />
+                                    <span>Ghế Đã Đặt</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-2">
-                            <button className="ghedadat" />
-                            <span>Ghế Đã Đặt</span>
-                        </div>
-                        <div className="col-2"></div>
-                        <div className="col-2"></div>
-                        <div className="col-2">
-                            <button onClick={()=>{getListId()}}>Xác nhận</button>
+
+
+                        <div className="col-3">
+                            <button className='btn btn-primary' onClick={() => { getListId() }}>Đặt ghế</button>
                         </div>
                     </div>
                 </div>

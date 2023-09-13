@@ -11,18 +11,28 @@ import Footer from './component/Footer';
 import Header from './component/Header';
 import Signup from './component/Signup';
 import DetailSeat from './component/DetailSeat';
+import ReturnPage from './component/ReturnPage';
+import Vnpay from './component/Vnpay';
+import HeaderHoa from './component/HeaderHoa';
+import Ticket from './component/Ticket';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-  <Header />
+  <Header />  
+  {/* <HeaderHoa /> */}
     <Routes>
       <Route path='/' element={<Content />} />
       <Route path='/login' element={<Login />} />
       <Route path='/list/:idSchedule' element={<List />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/detail/:listId' element={<DetailSeat />} />
-
+      <Route path='/return' element={<ReturnPage />} />
+      <Route path='/ticket' element={<Ticket />} />
+      
+  
     </Routes>
     <Footer />
   </BrowserRouter>

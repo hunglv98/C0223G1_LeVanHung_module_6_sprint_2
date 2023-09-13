@@ -31,22 +31,30 @@ function Login() {
                     password: yup.string().required()
                   })}
                   onSubmit={ async(values) => { 
-                    const data = await login(values);
-                    console.log(data);
-                    const token = data.type + " " + data.token;             
-                    const role = data.listRoles[0];
-                    localStorage.setItem("token",token);
-                    localStorage.setItem("role",role);
-                    localStorage.setItem("username",data.username)
-                    navigate("/")
-                    Swal.fire({
-                      icon:"success",
-                      timer: 2000,
-                      title: "Đăng nhập thành công",
-                      showConfirmButton:false
+                    try{
+                      const data = await login(values);
+                      console.log(data);
+                      const token = data.type + " " + data.token;             
+                      const role = data.listRoles[0];
+                      localStorage.setItem("token",token);
+                      localStorage.setItem("role",role);
+                      localStorage.setItem("username",data.username)
+                      navigate("/")
+                      Swal.fire({
+                        icon:"success",
+                        timer: 2000,
+                        title: "Đăng nhập thành công",
+                        showConfirmButton:false
+                      })
+                    }catch(error){
+                      Swal.fire({
+                        icon:"error",
+                        timer: 2000,
+                        title: "Tên đăng nhập hoặc mật khẩu không đúng",
+                        showConfirmButton:false
+                      })
                     }
-                      
-                    )
+                    
                     }}
                >
                 <Form>
