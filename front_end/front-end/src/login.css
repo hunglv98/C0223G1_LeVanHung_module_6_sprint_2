@@ -1,6 +1,8 @@
 .hle {
   font-family: "Roboto", sans-serif;
-  background-color: white; }
+  background-color: white;
+  
+}
 
 p {
   color: #b3b3b3;
@@ -24,7 +26,7 @@ h2 {
   font-size: 20px; }
 
 .half, .half .container > .row {
-  height: 140vh; 
+  min-height: 100vh; 
 }
 
 @media (max-width: 991.98px) {

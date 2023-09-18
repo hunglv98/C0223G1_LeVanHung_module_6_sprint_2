@@ -41,10 +41,10 @@ function Header() {
                 <Link to="/" className="nav-link active" aria-current="page" >Trang chủ</Link>
               </li>
               <li className="nav-item">
-                <Link to="/list" className="nav-link active">Đặt vé</Link>
+                <label htmlFor="inputDate" className="nav-link active">Đặt vé</label>
               </li>
               <li className="nav-item ">
-                <a className="nav-link active" >Lịch chạy</a>
+                <Link to="/ticketReturn" className="nav-link active" >Trả vé</Link>
               </li>
               {/* <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

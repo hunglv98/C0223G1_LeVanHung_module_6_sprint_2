@@ -32,7 +32,7 @@ function ReturnPage (){
             }).then( async()=>{
                 await returnFromPayment(localStorage.getItem('username'),idSeats)
                 localStorage.removeItem("listIdSeat")
-                // navigate("/")
+                navigate("/")
             })
         }else{
             Swal.fire({
@@ -42,7 +42,7 @@ function ReturnPage (){
                 showConfirmButton:false
             }).then(()=>{
                 localStorage.removeItem("listIdSeat")
-                // navigate("/")
+                navigate("/")
             })
         }
     }

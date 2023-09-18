@@ -1182,9 +1182,25 @@ html {
   border-radius: 45px 0 45px 0;
 }
 
+.duthuyen {
+  background-image: url("../src/images/du-thuyen-ha-long-scarlet-pearl.jpg");
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: cover;
+	background-position: center;
+  min-height: 100vh;
+}
 
+.ticket-return{
+  background-color: white;
+  padding: 30px;
+  margin-top: 50px;
+  border-radius: 20px;
+}
 
-
+.error-message{
+  color: red;
+}
 
 
 

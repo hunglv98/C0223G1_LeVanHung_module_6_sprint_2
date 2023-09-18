@@ -148,7 +148,8 @@ const search =async () =>{
                       <div className='form'>
                         
                         <div className="row">
-                          <div className='col-lg-2'></div>
+                          <div className='col-lg-2'>
+                          </div>
                           <div className="form-group col-lg-4">
                             <label htmlFor="inputDate" style={{"color":"black"}}>Ngày khởi hành</label>
                             <input type="date" className="form-control" id="inputDate" placeholder="1234 Main St" 
@@ -192,111 +193,111 @@ const search =async () =>{
                 </div>
                 <div className="container">
                   <div className="package_container">
-                    <div className="box active">
+                    <div className="box">
                       <div className="detail-box">
                         <h4>
-                          America
+                          Lịch tháng 09/2023
                         </h4>
                         <div className="price_detail">
                           <h5>
-                            $/1000
+                            Ưu đãi sốc giảm đến 50%
                           </h5>
                           <p>
-                            It is a long established fact that a reader will be
+                            Tận hưởng nét đẹp nên thơ của Đà Nẵng vào tiết trời thu
                           </p>
                         </div>
                         <a href="#">
-                          Book Now
+                          Đặt ngay
                         </a>
                       </div>
                     </div>
                     <div className="box ">
                       <div className="detail-box">
                         <h4>
-                          London
+                        Lịch tháng 08/2023
                         </h4>
                         <div className="price_detail">
                           <h5>
-                            $/1000
+                          Giá sốc chỉ 399.000 
                           </h5>
                           <p>
-                            It is a long established fact that a reader will be
+                            Tận hưởng giọng ca của Sơn Tùng MTP trong ngày 24/08
                           </p>
                         </div>
                         <a href="#">
-                          Book Now
+                        Đặt ngay
                         </a>
                       </div>
                     </div>
                     <div className="box ">
                       <div className="detail-box">
                         <h4>
-                          New York
+                        Lịch tháng 07/2023
                         </h4>
                         <div className="price_detail">
                           <h5>
-                            $/1000
+                            Ưu đãi giảm 10% 
                           </h5>
                           <p>
-                            It is a long established fact that a reader will be
+                            Tận hưởng mùa lễ hội biển cùng Huda Festival
                           </p>
                         </div>
                         <a href="#">
-                          Book Now
+                        Đặt ngay
                         </a>
                       </div>
                     </div>
                     <div className="box ">
                       <div className="detail-box">
                         <h4>
-                          Hong Kong
+                        Lịch tháng 06/2023
                         </h4>
                         <div className="price_detail">
                           <h5>
-                            $/1000
+                          Combo 200.000 VND/ 2 vé
                           </h5>
                           <p>
-                            It is a long established fact that a reader will be
+                            Tận hưởng lễ hội Danang International Firework Festival
                           </p>
                         </div>
                         <a href="#">
-                          Book Now
+                        Đặt ngay
                         </a>
                       </div>
                     </div>
                     <div className="box ">
                       <div className="detail-box">
                         <h4>
-                          Malaysia
+                        Lịch tháng 05/2023
                         </h4>
                         <div className="price_detail">
                           <h5>
-                            $/1000
+                          Giá vé chỉ từ 49.000 VND
                           </h5>
                           <p>
-                            It is a long established fact that a reader will be
+                            Tận hưởng tuần lễ vàng với ngàn hàng ưu đãi hấp dẫn
                           </p>
                         </div>
                         <a href="#">
-                          Book Now
+                        Đặt ngay
                         </a>
                       </div>
                     </div>
                     <div className="box ">
                       <div className="detail-box">
                         <h4>
-                          Japan
+                        Lịch tháng 04/2023
                         </h4>
                         <div className="price_detail">
                           <h5>
-                            $/1000
+                            Giá vé chỉ từ 1.000 VND
                           </h5>
                           <p>
-                            It is a long established fact that a reader will be
+                            Tận hưởng giá vé ưu đãi nhân dịp lễ 30/04
                           </p>
                         </div>
                         <a href="#">
-                          Book Now
+                        Đặt ngay
                         </a>
                       </div>
                     </div>

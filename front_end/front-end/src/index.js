@@ -15,6 +15,9 @@ import ReturnPage from './component/ReturnPage';
 import Vnpay from './component/Vnpay';
 import HeaderHoa from './component/HeaderHoa';
 import Ticket from './component/Ticket';
+import TicketReturn from './component/TicketReturn';
+import ForgotCode from './component/ForgotCode';
+import History from './component/History';
 
 
 
@@ -31,8 +34,10 @@ root.render(
       <Route path='/detail/:listId' element={<DetailSeat />} />
       <Route path='/return' element={<ReturnPage />} />
       <Route path='/ticket' element={<Ticket />} />
+      <Route path='/ticketReturn' element={<TicketReturn />} />
+      <Route path='/forgotCode' element={<ForgotCode />} />
+      <Route path='/history' element={<History />} />
       
-  
     </Routes>
     <Footer />
   </BrowserRouter>

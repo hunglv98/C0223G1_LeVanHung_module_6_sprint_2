@@ -43,7 +43,8 @@ function DetailSeat() {
         })
     }
     return (
-        <div className='container' style={{"margin":"100px auto" }}>
+        <div className='duthuyen'>
+        <div className='container' style={{paddingTop:"100px" }}>
             {seats.length > 0 && customer &&
                 <section className="ftco-section">
                     <div className="container">
@@ -52,7 +53,7 @@ function DetailSeat() {
                                 <div className="wrapper">
                                     <div className="row no-gutters">
                                         <div className="col-lg-8 col-md-7 order-md-last d-flex align-items-stretch">
-                                            <div className="contact-wrap w-100 p-md-5 p-4">
+                                            <div className="contact-wrap w-100 p-md-5 p-4" style={{backgroundColor:"white"}}>
                                                 <h3 className="mb-4">Thông tin lịch trình</h3>
                                                 <div id="form-message-warning" className="mb-4" />
 
@@ -172,6 +173,7 @@ function DetailSeat() {
                     </div>
                 </section>
             }
+        </div>
         </div>
     )
 }
