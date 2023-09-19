@@ -6,5 +6,6 @@ export const payWithVNpay = async (total) =>{
 }
 
 export const returnFromPayment = async(username,listIdSeat) =>{
-    await axios.put(`http://localhost:8080/vnpay/return/${username}/${listIdSeat}`)
+   const res = await axios.put(`http://localhost:8080/vnpay/return/${username}/${listIdSeat}`)
+   return res.data;
 }

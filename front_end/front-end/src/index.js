@@ -12,8 +12,6 @@ import Header from './component/Header';
 import Signup from './component/Signup';
 import DetailSeat from './component/DetailSeat';
 import ReturnPage from './component/ReturnPage';
-import Vnpay from './component/Vnpay';
-import HeaderHoa from './component/HeaderHoa';
 import Ticket from './component/Ticket';
 import TicketReturn from './component/TicketReturn';
 import ForgotCode from './component/ForgotCode';
@@ -25,7 +23,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
   <Header />  
-  {/* <HeaderHoa /> */}
     <Routes>
       <Route path='/' element={<Content />} />
       <Route path='/login' element={<Login />} />

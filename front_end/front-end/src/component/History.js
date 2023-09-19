@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { getCustomerByUsername } from '../service/CustomerService';
 import { getTicketByIdCustomer, returnTicketById } from '../service/TicketService';
+import moment from 'moment';
+import numeral from 'numeral';
 
 function History() {
     const [page, setPage] = useState(0)
@@ -40,7 +42,7 @@ function History() {
         if (customer) {
             try {
                 const data = await getTicketByIdCustomer(page, customer.idCustomer, code, date, time)
-                console.log(data);
+            
                 setList(data)
                 setTickets(data.content)
             } catch (error) {
@@ -48,7 +50,7 @@ function History() {
             }
         }
     }
-
+    console.log(tickets);
 
     const returnTicket = async (id) => {
         Swal.fire({
@@ -95,108 +97,110 @@ function History() {
             setPage(page - 1)
         }
     }
-    const searchList = () =>{
+    const searchList = () => {
         const code = document.getElementById("codeTicket").value
         const date = document.getElementById("date").value
         const time = document.getElementById("time").value
+        setPage(0)
         setCode(code)
         setDate(date)
         setTime(time)
     }
 
     useEffect(() => {
+        document.title = "Lịch sử giao dịch"
         getUser()
 
     }, [location])
 
     useEffect(() => {
         getListHistory()
-    }, [customer,page,code,date,time])
+    }, [customer, page, code, date, time])
 
     return (
         <>
-        
-        <div style={{ minHeight: "80vh", padding: "30px" }} >
-            {/* <div className='row'>
+
+            <div style={{ minHeight: "80vh", padding: "30px",color:"rgb(10, 141, 145)" }} >
+                {/* <div className='row'>
                 <h1>Lịch sử thanh toán</h1>
             </div> */}
-            <div className='row'>
-                <div className='col-4'>
-                    <h1>Lịch sử thanh toán</h1>
-                </div>
-                <div className='col-2'>
-                    <input type='text' id='codeTicket' placeholder='Mã đặt vé' className='form-control' />
-                </div>
-                <div className='col-2'>
-                    <input type='date' id='date' placeholder='Ngày khởi hành' className='form-control' />
-                </div>
-                <div className='col-2'>
-                    <input type='text' id='time' placeholder='Giờ khởi hành' className='form-control' />
-                </div>
-                <div className='col-2'>
-                    <button id='codeTicket' className='btn btn-primary' onClick={()=>searchList()}>Tìm kiếm</button>
-                </div>
-
-            </div>
-            <div className='row'>
-                <div class="table-responsive">
-                    <table class="table table-primary">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Mã đặt vé</th>
-                                <th scope="col">Ngày khởi hành</th>
-                                <th scope="col">Giờ khởi hành</th>
-                                <th scope="col">Giá vé</th>
-                                <th scope="col">Hành động</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {tickets.length > 0 && currDate ? tickets.map((i, index) => {
-                                return (
-                                    <tr class="" key={index}>
-                                        <td scope="row">{list.numberOfElements*page +index+1}</td>
-                                        <td>{i.codeTicket}</td>
-                                        <td>{i.seat.schedule.dateDeparture}</td>
-                                        <td>{i.seat.schedule.timeDeparture}</td>
-                                        <td>{i.seat.typeSeat.priceSeat}</td>
-                                        <td>
-                                            <button className='btn btn-warning' onClick={() => returnTicket(i.idTicket)}>Trả vé</button>
-                                            {/* <button className='btn btn-primary'>Chi tiết</button> */}
-
-
-                                        </td>
-
-                                    </tr>
-                                )
-                            }) :
-                                <>
-                                    Không tồn tại lịch sử đặt vé
-                                </>
-                            }
-                        </tbody>
-
-                    </table>
-                    <div style={{display:"flex",float:"right"}}>
-                        {list != null &&
-                            <ul className="pagination">
-
-                                {page > 0 &&
-                                    <li className="page-item" onClick={() => decreasePage()}><a className="page-link">Previous</a></li>}
-                                {list.totalPages > 0 &&
-                                    <li className="page-item"><a  className="page-link">{page + 1}/{list.totalPages}</a></li>}
-                                {(page + 1) < list.totalPages &&
-                                    <li className="page-item" onClick={() => increasePage()}><a className="page-link">Next</a></li>}
-
-                            </ul>
-                        }
+                <div className='row'>
+                    <div className='col-4'>
+                        <h1 style={{textTransform:"uppercase"}}>Lịch sử thanh toán</h1>
                     </div>
-                </div>
+                    <div className='col-2'>
+                        <input type='text' id='codeTicket' placeholder='Mã đặt vé' className='form-control' />
+                    </div>
+                    <div className='col-2'>
+                        <input type='date' id='date' placeholder='Ngày khởi hành' className='form-control' />
+                    </div>
+                    <div className='col-2'>
+                        <input type='text' id='time' placeholder='Giờ khởi hành' className='form-control' />
+                    </div>
+                    <div className='col-2'>
+                        <button id='codeTicket' className='btn btn-primary' style={{backgroundColor:"rgb(10, 141, 145)"}} onClick={() => searchList()}>Tìm kiếm</button>
+                    </div>
 
+                </div>
+                <div className='row'>
+                    <div class="table-responsive" style={{textAlign:"center"}}>
+                        <table class="table table-primary">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Mã đặt vé</th>
+                                    <th scope="col">Ngày khởi hành</th>
+                                    <th scope="col">Giờ khởi hành</th>
+                                    <th scope="col">Giá vé</th>
+                                    <th scope="col">Hành động</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {tickets.length > 0 && currDate ? tickets.map((i, index) => {
+                                    return (
+                                        <tr class="" key={index}>
+                                            <td scope="row">{list.numberOfElements * page + index + 1}</td>
+                                            <td>{i.codeTicket}</td>
+                                            <td>{moment(i.seat.schedule.dateDeparture).format('DD-MM-YYYY')}</td>
+                                            <td>{i.seat.schedule.timeDeparture}</td>
+                                            <td>{numeral(i.seat.typeSeat.priceSeat).format("")} VND</td>
+                                            <td>
+                                                <button className='btn btn-warning' onClick={() => returnTicket(i.idTicket)}>Hoàn vé</button>
+                                                {/* <button className='btn btn-primary'>Chi tiết</button> */}
+
+
+                                            </td>
+
+                                        </tr>
+                                    )
+                                }) :
+                                    <>
+                                        Không tồn tại lịch sử đặt vé
+                                    </>
+                                }
+                            </tbody>
+
+                        </table>
+                        <div style={{ display: "flex", float: "right" }}>
+                            {list != null &&
+                                <ul className="pagination">
+
+                                    {page > 0 &&
+                                        <li className="page-item" onClick={() => decreasePage()}><a className="page-link">Trước</a></li>}
+                                    {list.totalPages > 0 &&
+                                        <li className="page-item"><a className="page-link">{page + 1}/{list.totalPages}</a></li>}
+                                    {(page + 1) < list.totalPages &&
+                                        <li className="page-item" onClick={() => increasePage()}><a className="page-link">Sau</a></li>}
+                                
+                                </ul>
+                            }
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
         </>
     )

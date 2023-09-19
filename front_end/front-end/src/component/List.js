@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getPageSearch, getSeatSearch } from '../service/SeatService';
 import Swal from 'sweetalert2';
 function List() {
-
     const params = useParams()
     const [listId, setListId] = useState([])
     const [seats1_1, setSeats1_1] = useState([])
@@ -46,6 +45,7 @@ function List() {
     }
 
     useEffect(() => {
+        document.title = "Danh sách ghế ngồi"
         getListSearchType1_1()
         getListSearchType1_2()
         getListSearchType2_1()

@@ -17,37 +17,35 @@ function TicketReturn() {
         setIsOpen(false);
     };
 
-    const returnTicket = async(id) =>{
+    const returnTicket = async (id) => {
         Swal.fire({
-            icon:"warning",
-            title:"Bạn có muốn hoàn trả vé?",
-            text:"Hành động này sẽ không được hoàn tác!",
-            showCancelButton:true,
-            confirmButtonText:"Xác nhận",
-            cancelButtonText:"Hủy"
-        }).then(async(res)=>{
-            if(res.isConfirmed){
-                try{
+            icon: "warning",
+            title: "Bạn có muốn hoàn trả vé?",
+            text: "Hành động này sẽ không được hoàn tác!",
+            showCancelButton: true,
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Hủy"
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                try {
                     await returnTicketById(id)
-                
-                }catch(error){
+
+                } catch (error) {
                     Swal.fire({
-                        icon:"error",
-                        title:"Đã quá thời hạn trả vé quy định!",
-                        timer:2000,
-                        showConfirmButton:false
+                        icon: "error",
+                        title: "Đã quá thời hạn trả vé quy định!",
+                        timer: 2000,
+                        showConfirmButton: false
                     })
-                }finally{
+                } finally {
                     closeModal()
                 }
-            }else if (res.dismiss === Swal.DismissReason.cancel) { }
+            } else if (res.dismiss === Swal.DismissReason.cancel) { }
         })
-
-
-        
-        
-        
     }
+    useEffect(()=>{
+        document.title = "Hoàn vé"
+    },[])
 
     return (
         <div className='duthuyen'>
@@ -82,32 +80,33 @@ function TicketReturn() {
                 >
                     <Form>
                         <div className='row' >
-                        <div className='col-4'></div>
-                        <div className='col-4 form-group ticket-return' style={{backgroundColor:"white"}}>
-                            <div className='row'>
-                                <label htmlFor='ticketCode'>Nhập mã đặt vé</label>
-                                <Field className="form-control" name="ticketCode" id="ticketCode" />
-                                <ErrorMessage name='ticketCode' component="div" className='error-message' />
+                            <div className='col-4'></div>
+                            <div className='col-4 form-group ticket-return' style={{ backgroundColor: "white", color:"#0a8d91" }}>
+                                <h1 style={{textAlign:"center",textTransform:'uppercase'}}>Thông tin đặt vé</h1>
+                                <div className='row'>
+                                    <label htmlFor='ticketCode'>Mã đặt vé</label>
+                                    <Field className="form-control" name="ticketCode" id="ticketCode" />
+                                    <ErrorMessage name='ticketCode' component="div" className='error-message' />
+                                </div>
+                                <div className='row'>
+                                    <label htmlFor='mailCustomer'>Địa chỉ email</label>
+                                    <Field className="form-control" name="mailCustomer" id="mailCustomer" />
+                                    <ErrorMessage name='mailCustomer' component="div" className='error-message' />
+                                </div>
+                                <div className='row'>
+                                    <label htmlFor='telCustommer'>Số điện thoại</label>
+                                    <Field className="form-control" name="telCustommer" id="telCustommer" />
+                                    <ErrorMessage name='telCustommer' component="div" className='error-message' />
+                                </div>
+                                <div className='row'>
+                                    <Link to="/forgotCode" >Bạn đã quên mã đặt vé?</Link>
+                                </div>
+                                <div className='row' style={{ float: "right" }}>
+                                    <button className='btn btn-primary' style={{ width: "150px",backgroundColor:"#0a8d91"}} type='submit' >Tìm vé</button>
+                                </div>
+
                             </div>
-                            <div className='row'>
-                                <label htmlFor='mailCustomer'>Nhập địa chỉ email</label>
-                                <Field className="form-control" name="mailCustomer" id="mailCustomer" />
-                                <ErrorMessage name='mailCustomer' component="div" className='error-message' />
-                            </div>
-                            <div className='row'>
-                                <label htmlFor='telCustommer'>Nhập số điện thoại</label>
-                                <Field className="form-control" name="telCustommer" id="telCustommer" />
-                                <ErrorMessage name='telCustommer' component="div" className='error-message'  />
-                            </div>
-                            <div className='row'>
-                                <Link to="/forgotCode" >Bạn đã quên mã đặt vé?</Link>
-                            </div>
-                            <div className='row' style={{float:"right"}}>
-                            <button className='btn btn-primary' style={{width:"150px"}} type='submit' >Tìm vé</button>
-                            </div>
-                           
-                        </div>
-                        <div className='col-4'></div>
+                            <div className='col-4'></div>
                         </div>
                     </Form>
                 </Formik>
@@ -120,11 +119,12 @@ function TicketReturn() {
                         <div className="modal_overlay">
                         </div>
                         <div className="modal_body">
-                            <div className="modal_inner">
-                                <div className=''>
-                                    <h3 style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', backgroundColor: '#866ec7' }}>
-                                        Thông tin mã vé {ticket.codeTicket}  </h3>
-                                </div>
+                            <div className='title' >
+                                <h3 style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', backgroundColor: '#0a8d91', minHeight: "70px",paddingTop:"20px" }}>
+                                    Thông tin mã vé {ticket.codeTicket}  </h3>
+                            </div>
+                            <div className="modal_inner" style={{ padding: "20px" }}>
+
                                 <div className="row">
                                     <div className="col-md-6">
                                         <div className="form-group">
@@ -170,14 +170,14 @@ function TicketReturn() {
                                             <span className="select-arrow" />
                                         </div>
                                     </div>
-                                </div>                          
+                                </div>
                                 <div className="form-btn">
                                     <div className="row">
                                         <div className="col-6">
-                                            <button className="submit-btn home-btn" onClick={()=>returnTicket(ticket.idTicket)}>Xác nhận</button>
+                                            <button style={{backgroundColor:"#0a8d91"}} className="submit-btn home-btn" onClick={() => returnTicket(ticket.idTicket)}>Xác nhận</button>
                                         </div>
                                         <div className="col-6">
-                                            <button onClick={() => closeModal()} className="submit-btn back-btn">Trở về
+                                            <button style={{backgroundColor:"#0a8d91"}} onClick={() => closeModal()} className="submit-btn back-btn">Trở về
                                             </button>
                                         </div>
                                     </div>

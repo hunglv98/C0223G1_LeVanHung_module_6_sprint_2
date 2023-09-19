@@ -116,6 +116,7 @@ h6{
 }
 .list{
     background-color: white;
+    color: rgb(10, 141, 145);
 }
 
 
@@ -230,7 +231,7 @@ h6{
     line-height: 24px;
     height: 24px;
     font-size: 12px;
-    color: #866ec7;
+    color: #0a8d91;
 }
 
 .modal_inner .form-checkbox input {
@@ -289,7 +290,7 @@ h6{
 
 .modal_inner .form-btn .home-btn {
     color: #fff;
-    background-color: #866ec7;
+    background-color: #0091ff;
     font-weight: 400;
     height: 50px;
     font-size: 18px;
@@ -313,7 +314,7 @@ h6{
 
 .modal_inner .form-btn .back-btn {
     color: #fff;
-    background-color: #ba8b00;
+    background-color: #0091ff;
     font-weight: 400;
     height: 50px;
     font-size: 18px;
@@ -330,4 +331,8 @@ h6{
     color: white;
     padding: 10px 0;
     vertical-align: center;
+}
+
+.nav-item{
+    width: fit-content;
 }
