@@ -16,6 +16,8 @@ import Ticket from './component/Ticket';
 import TicketReturn from './component/TicketReturn';
 import ForgotCode from './component/ForgotCode';
 import History from './component/History';
+import Information from './component/Information';
+import NotFount from './component/NotFound';
 
 
 
@@ -34,6 +36,8 @@ root.render(
       <Route path='/ticketReturn' element={<TicketReturn />} />
       <Route path='/forgotCode' element={<ForgotCode />} />
       <Route path='/history' element={<History />} />
+      <Route path='/info' element={<Information />} />
+      <Route path='/notFound' element={<NotFount />} />
       
     </Routes>
     <Footer />

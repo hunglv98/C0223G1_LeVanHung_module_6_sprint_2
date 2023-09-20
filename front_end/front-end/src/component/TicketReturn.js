@@ -4,6 +4,8 @@ import * as yup from "yup"
 import { getTicketFromCode, returnTicketById } from '../service/TicketService';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import numeral from 'numeral';
 
 function TicketReturn() {
     const [isOpen, setIsOpen] = useState(true);
@@ -99,6 +101,9 @@ function TicketReturn() {
                                     <ErrorMessage name='telCustommer' component="div" className='error-message' />
                                 </div>
                                 <div className='row'>
+                                    <p style={{color:"#0a8d91",fontWeight:"bold"}}>Lưu ý: Bạn chỉ được hoàn vé trước một giờ tàu chạy.</p>
+                                </div>
+                                <div className='row'>
                                     <Link to="/forgotCode" >Bạn đã quên mã đặt vé?</Link>
                                 </div>
                                 <div className='row' style={{ float: "right" }}>
@@ -120,16 +125,16 @@ function TicketReturn() {
                         </div>
                         <div className="modal_body">
                             <div className='title' >
-                                <h3 style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', backgroundColor: '#0a8d91', minHeight: "70px",paddingTop:"20px" }}>
+                                <h3 style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', backgroundColor: '#0a8d91', minHeight: "70px",paddingTop:"20px", borderRadius:"10px" }}>
                                     Thông tin mã vé {ticket.codeTicket}  </h3>
                             </div>
-                            <div className="modal_inner" style={{ padding: "20px" }}>
+                            <div className="modal_inner" style={{ padding: "20px"}}>
 
                                 <div className="row">
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label className="form-label">Ngày khởi hành: </label>
-                                            <p className='form-control'> {ticket.seat.schedule.dateDeparture} </p>
+                                            <p className='form-control'> {moment(ticket.seat.schedule.dateDeparture).format("DD/MM/YYYY")} </p>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
@@ -159,14 +164,14 @@ function TicketReturn() {
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label className="form-label">Ngày đặt vé: </label>
-                                            <p className='form-control'> {ticket.dateBooking} </p>
+                                            <p className='form-control'> {moment(ticket.dateBooking).format("DD-MM-YYYY HH:MM:SS")} </p>
                                             <span className="select-arrow" />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label className="form-label">Giá vé: </label>
-                                            <p className='form-control'> {ticket.seat.typeSeat.priceSeat} </p>
+                                            <p className='form-control'> {numeral(ticket.seat.typeSeat.priceSeat).format()} VND </p>
                                             <span className="select-arrow" />
                                         </div>
                                     </div>

@@ -19,6 +19,8 @@ import { getListDate, getListTime, getScheduleByDateAndTime } from '../service/S
 import { getSeatSearch } from '../service/SeatService';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import * as yup from "yup"
 
 
 
@@ -47,34 +49,6 @@ function Content() {
     document.title = "Trang chủ"
     getTime()
   }, [])
-  const search = async () => {
-    const time = document.getElementById("inputTime").value
-    const date = document.getElementById("inputDate").value
-    let date1 = new Date(date + " " + time);
-    date1.setHours(date1.getHours() + 1)
-    console.log(date1);
-    if (date1 > Date.now()) {
-      try {
-        const idschedule = await getScheduleByDateAndTime(date, time)
-        navigate(`/list/${idschedule}`)
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Không tìm thấy lịch chạy này",
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
-    } else {
-      Swal.fire({
-        icon: "error",
-        timer: 2000,
-        title: "Hãy chọn chuyến có thời gian trước một giờ tàu chạy",
-        showConfirmButton: false
-      })
-    }
-
-  }
 
   return (
     <div className='content1'>
@@ -128,7 +102,7 @@ function Content() {
                   Tự hào mang đến chất lượng dịch vụ tốt nhất, an toàn là trên hết, hãy để HLE Yacht mang đến những trải nghiệm khám phá vẻ đẹp huyền bí của sông Hàn.
                 </p>
                 <div>
-                  <a href="#">
+                  <a href="#inputDate">
                     Đặt vé
                   </a>
                 </div>
@@ -160,33 +134,78 @@ function Content() {
                 </p>
               </div>
               <div className='form'>
+                <>
+                  <Formik
+                    initialValues={{
+                      inputDate: "",
+                      inputTime: "",
+                    }}
+                    validationSchema={yup.object({
+                      inputDate: yup.string().required("Mời nhập vào ngày khởi hành"),
+                      inputTime: yup.string().required("Mời nhập vào giờ khởi hành")
+                    })}
+                    onSubmit={ async(values) => {
+                      console.log(values);
+                      const time = values.inputTime
+                      const date = values.inputDate
+                      let date1 = new Date(date + " " + time);
+                      date1.setHours(date1.getHours() + 1)
+                      console.log(date1);
+                      if (date1 > Date.now()) {
+                        try {
+                          const idschedule = await getScheduleByDateAndTime(date, time)
+                          navigate(`/list/${idschedule}`)
+                        } catch (error) {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Không tìm thấy lịch chạy này",
+                            showConfirmButton: false,
+                            timer: 2000
+                          })
+                        }
+                      } else {
+                        Swal.fire({
+                          icon: "error",
+                          timer: 2000,
+                          title: "Hãy chọn chuyến có thời gian trước một giờ tàu chạy",
+                          showConfirmButton: false
+                        })
+                      }
+                    }}
+                  >
+                    <Form>
+                      <div className="row">
+                        <div className='col-lg-2'>
+                        </div>
+                        <div className="form-group col-lg-4">
 
-                <div className="row">
-                  <div className='col-lg-2'>
-                  </div>
-                  <div className="form-group col-lg-4">
-                    <label htmlFor="inputDate" style={{ "color": "black" }}>Ngày khởi hành</label>
-                    <input type="date" className="form-control" id="inputDate" placeholder="1234 Main St"
-                      min={new Date().toISOString().split('T')[0]} />
-                  </div>
-                  <div className="form-group col-lg-4">
-                    <label htmlFor="inputPrice" style={{ "color": "black" }}>Giờ khởi hành</label>
-                    <select type="text" className="form-control" id="inputTime" placeholder="1234 Main St">
-                      <option value="">-Chọn giờ khởi hành-</option>
-                      {times.length > 0 && times.map((i, index) => {
-                        return (
-                          <option key={index} value={i}>{i}</option>
-                        )
-                      })}
-                    </select>
-                  </div>
+                          <label htmlFor='inputDate' style={{ "color": "black" }}>Ngày khởi hành</label>
+                          <Field type="date" className="form-control" name="inputDate" id="inputDate"
+                            min={new Date().toISOString().split('T')[0]} />
+                          <ErrorMessage name='inputDate' component="div" className='error-message' />
+                        </div>
+                        <div className="form-group col-lg-4">
 
-                </div>
+                          <label htmlFor='inputTime' style={{ "color": "black" }}>Giờ khởi hành</label>
+                          <Field as="select" className="form-control" name="inputTime" id="inputTime">
+                            <option value="">-Chọn giờ khởi hành-</option>
+                            {times.length > 0 && times.map((i, index) => {
+                              return (
+                                <option key={index} value={i}>{i}</option>
+                              )
+                            })}
+                          </Field>
+                          <ErrorMessage name='inputTime' component="div" className='error-message' />
+                        </div>
 
-                <div className="d-flex justify-content-center">
-                  <button className="btn btn-primary" style={{ backgroundColor: "#0a8d91", minWidth: "120px", borderRadius: "20px" }} onClick={() => search()}>Đặt ngay</button>
-                </div>
+                      </div>
 
+                      <div className="d-flex justify-content-center">
+                        <button className="btn btn-primary" style={{ backgroundColor: "#0a8d91", minWidth: "120px", borderRadius: "20px" }} type='submit'>Đặt ngay</button>
+                      </div>
+                    </Form>
+                  </Formik>
+                </>
               </div>
             </div>
           </div>

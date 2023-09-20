@@ -3,8 +3,10 @@ import "../list.css"
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPageSearch, getSeatSearch } from '../service/SeatService';
 import Swal from 'sweetalert2';
+import { getScheduleById } from '../service/ScheduleService';
 function List() {
     const params = useParams()
+    const [schedule,setSchedule] = useState()
     const [listId, setListId] = useState([])
     const [seats1_1, setSeats1_1] = useState([])
     const [seats1_2, setSeats1_2] = useState([])
@@ -44,15 +46,36 @@ function List() {
         setSeats3_2(data)
     }
 
+    const checkSchedule = async(id) =>{
+        try{
+            const data = await getScheduleById(id)
+            setSchedule(data)
+        }catch(error){
+            navigate("/")
+            Swal.fire({
+                icon:"error",
+                timer:2000,
+                title: "Không tồn tại lịch chạy này!",
+                showConfirmButton:false
+            })
+            
+        }
+        
+    }
+
     useEffect(() => {
         document.title = "Danh sách ghế ngồi"
+        checkSchedule(params.idSchedule)
+    }, [params.idSchedule])
+
+    useEffect(() => {
         getListSearchType1_1()
         getListSearchType1_2()
         getListSearchType2_1()
         getListSearchType2_2()
         getListSearchType3_1()
         getListSearchType3_2()
-    }, [params.idSchedule])
+    }, [schedule])
 
     const addToList = async (id) => {
         let light = document.getElementById(id)

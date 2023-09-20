@@ -2,17 +2,14 @@ import React, { useEffect } from 'react';
 import "../content.css"
 
 
-import hle from "../images/zyro-image.png"
+
 import logo from "../images/Untitled.png"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { payMomo } from '../service/PaymentMomoService';
+
 
 function Header() {
   const navigate = useNavigate()
   const location = useLocation()
-  const paymentMomo = async () => {
-    await payMomo()
-  }
   const logout = async () => {
     localStorage.clear();
     navigate("/")
@@ -61,7 +58,7 @@ function Header() {
               <div className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
+                    src="https://i.pinimg.com/564x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg"
                     className="rounded-circle"
                     height="40"
                     alt="Portrait of a Woman"
@@ -69,7 +66,7 @@ function Header() {
                   />
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a className="dropdown-item" href="#">Thông tin khách hàng</a></li>
+                  <li><Link to="/info" className="dropdown-item" href="#">Thông tin khách hàng</Link></li>
                   <li><Link to="/history" className="dropdown-item" >Lịch sử giao dịch</Link></li>
                   <li><a className="dropdown-item" onClick={() => logout()}>Đăng xuất</a></li>
                 </ul>

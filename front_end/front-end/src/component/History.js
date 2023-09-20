@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { getCustomerByUsername } from '../service/CustomerService';
-import { getTicketByIdCustomer, returnTicketById } from '../service/TicketService';
+import { getTicketByIdCustomer, getTicketByIdTicket, returnTicketById } from '../service/TicketService';
 import moment from 'moment';
 import numeral from 'numeral';
+import {Button, Modal} from "react-bootstrap";
 
 function History() {
     const [page, setPage] = useState(0)
@@ -12,7 +13,28 @@ function History() {
     const [time, setTime] = useState("")
     const [code, setCode] = useState("")
     const [list, setList] = useState()
+    const [showModal, setShowModal] = useState(false);
+    const [ticket, setTicket] = useState();
 
+    const handleModalClose = () => {
+        setShowModal(false);
+    };
+    const handleModalOpen = async (id) => {
+        setShowModal(true);
+        try{
+            const data = await getTicketByIdTicket(id)
+            setTicket(data)
+            console.log(data);
+        }catch(error){
+            Swal.fire({
+                icon:"error",
+                title:"Không tìm thấy vé này",
+                timer:2000,
+                showConfirmButton:false
+            })
+        }
+       
+    };
 
     const [customer, setCustomer] = useState();
     const [tickets, setTickets] = useState([]);
@@ -26,13 +48,13 @@ function History() {
         const username = localStorage.getItem("username");
         const role = localStorage.getItem("role");
         if (role != "ROLE_CUSTOMER") {
-            navigate("/")
-            Swal.fire({
-                icon: "error",
-                title: "Bạn không có quyền vào trang này",
-                timer: 2000,
-                showConfirmButton: false
-            })
+            navigate("/notFound")
+            // Swal.fire({
+            //     icon: "error",
+            //     title: "Bạn không có quyền vào trang này",
+            //     timer: 2000,
+            //     showConfirmButton: false
+            // })
         } else {
             const data = await getCustomerByUsername(username);
             setCustomer(data)
@@ -152,14 +174,16 @@ function History() {
                                     <th scope="col">Ngày khởi hành</th>
                                     <th scope="col">Giờ khởi hành</th>
                                     <th scope="col">Giá vé</th>
-                                    <th scope="col">Hành động</th>
-
+                                    <th scope="col">Hoàn vé</th>
+                                    <th scope="col">Chi tiết</th>
+                                   
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {tickets.length > 0 && currDate ? tickets.map((i, index) => {
                                     return (
+                                        <>
                                         <tr class="" key={index}>
                                             <td scope="row">{list.numberOfElements * page + index + 1}</td>
                                             <td>{i.codeTicket}</td>
@@ -167,13 +191,17 @@ function History() {
                                             <td>{i.seat.schedule.timeDeparture}</td>
                                             <td>{numeral(i.seat.typeSeat.priceSeat).format("")} VND</td>
                                             <td>
-                                                <button className='btn btn-warning' onClick={() => returnTicket(i.idTicket)}>Hoàn vé</button>
+                                                <button className='btn btn-outline-primary' onClick={() => returnTicket(i.idTicket)}><i class="fa-solid fa-rotate-left"></i></button>
                                                 {/* <button className='btn btn-primary'>Chi tiết</button> */}
 
 
                                             </td>
+                                            <td><a onClick={()=>handleModalOpen(i.idTicket)}><i class="fa-solid fa-circle-info"></i></a></td>
 
                                         </tr>
+                                        
+
+                                        </>
                                     )
                                 }) :
                                     <>
@@ -200,6 +228,59 @@ function History() {
                     </div>
 
                 </div>
+                <div className="text-center m-auto">
+            <Modal
+                className="modal-l"
+                show={showModal}
+                onHide={handleModalClose}
+                keyboard={false}
+                centered
+            >
+
+                <Modal.Body >
+                    {ticket != null &&
+                        <div className='row' style={{display:"flex",color:"rgb(10, 141, 145)"}}>
+                            <h2 style={{textAlign:"center",fontSize:"30px"}}>CHI TIẾT ĐẶT VÉ</h2>
+                            <div className='col-6 form-group'>
+                                <label>Mã đặt vé</label>
+                                <div className='form-control'>{ticket.codeTicket}</div>
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Đơn giá</label>
+                                <div className='form-control'>{numeral(ticket.seat.typeSeat.priceSeat).format()} VND</div>
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Ngày khởi hành</label>
+                                <div className='form-control'>{moment(ticket.seat.schedule.dateDeparture).format('DD-MM-YYYY')} </div>
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Giờ khởi hành</label>
+                                <div className='form-control'>{ticket.seat.schedule.timeDeparture}</div>
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Số ghế</label>
+                                <div className='form-control'>{ticket.seat.nameSeat}</div>
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Loại ghế</label>
+                                <div className='form-control'>{ticket.seat.typeSeat.nameTypeSeat}</div>
+                            </div>
+                            
+                            <div className='col-6 form-group'>
+                                <label>Ngày đặt vé</label>
+                                <div className='form-control'>{moment(ticket.dateBooking).format("DD-MM-YYYY HH:MM:SS")}</div>
+                            </div>
+                            
+                            <div className='col-6 form-group'>
+                                <label>Tên tàu</label>
+                                <div className='form-control'>{ticket.seat.schedule.ship.nameShip}</div>
+                            </div>
+                           
+                        </div>
+}
+                </Modal.Body>
+            </Modal>
+        </div>
             </div>
 
         </>

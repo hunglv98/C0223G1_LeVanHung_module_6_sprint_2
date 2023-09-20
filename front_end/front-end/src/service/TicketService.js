@@ -18,3 +18,8 @@ export const getTicketByIdCustomer = async(page,id,code,date,time) =>{
     console.log(res.data);
     return res.data
 }
+
+export const getTicketByIdTicket = async(id) =>{
+    const res = await axios.get(`http://localhost:8080/ticket/${id}`)
+    return res.data
+}

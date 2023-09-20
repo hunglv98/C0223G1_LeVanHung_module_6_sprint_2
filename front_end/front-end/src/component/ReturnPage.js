@@ -2,12 +2,36 @@ import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { returnFromPayment } from '../service/PaymentVNpay';
 import { Link, useNavigate } from 'react-router-dom';
+import numeral from 'numeral';
+import moment from 'moment';
+import {Button, Modal} from "react-bootstrap";
+
 
 function ReturnPage() {
     const navigate = useNavigate()
+    const [showModal, setShowModal] = useState(false);
+
+    const handleModalClose = () => {
+        setShowModal(false);
+    };
+    const handleModalOpen = async () => {
+        setShowModal(true);
+    };
+
+
     const [responseCode, setResponseCode] = useState()
     const [idSeats, setIdSeats] = useState()
     const [tickets, setTickets] = useState([]);
+    const [amount,setAmount] = useState()
+
+    const getAmount = () =>{
+        if(tickets.length >0){
+        const amount = tickets.reduce((accumulator,i)=>{
+            return accumulator +=i.seat.typeSeat.priceSeat 
+        },0)
+        setAmount(amount)
+    }
+    }
  
 
     const getURL = () => {
@@ -60,6 +84,10 @@ function ReturnPage() {
         display()
     }, [idSeats])
 
+    useEffect(()=>{
+        getAmount()
+    },[tickets])
+
     return (
         <div className='duthuyen'>
             <div className='row' >
@@ -70,7 +98,7 @@ function ReturnPage() {
                     {tickets.length > 0 &&
                         <>
                             <div className='row'>
-                                <label htmlFor='ticketCode'>Mã đặt vé</label>
+                                <label htmlFor='ticketCode'>Danh sách vé đã đặt</label>
                                 {/* {tickets.map((i) => {
                                     return (
                                         <div className='col-3'> 
@@ -78,16 +106,16 @@ function ReturnPage() {
                                         </div>
                                     )
                                 })} */}
-                                <p className="form-control" id="ticketCode">{tickets.map((i,key)=>key != (tickets.length-1) ? i.codeTicket + ", ":i.codeTicket) }</p>
+                                <a onClick={handleModalOpen} className="form-control" id="ticketCode" style={{color:"blue"}}>Xem chi tiết</a>
                             </div>
                             <div className='row'>
                                 <label htmlFor='mailCustomer'>Ngày giao dịch</label>
-                                <p className="form-control" name="mailCustomer" id="mailCustomer" >{tickets[0].dateBooking}</p>
+                                <p className="form-control" name="mailCustomer" id="mailCustomer" >{moment(tickets[0].dateBooking).format("DD-MM-YYYY")}</p>
 
                             </div>
                             <div className='row'>
                                 <label htmlFor='telCustommer'>Tổng tiền</label>
-                                <p className="form-control" name="telCustommer" id="telCustommer" >{tickets[0].seat.typeSeat.priceSeat * tickets.length}</p>
+                                <p className="form-control" name="telCustommer" id="telCustommer" >{numeral(amount).format("")} VND</p>
                             </div>
                         </>
                     }
@@ -107,6 +135,56 @@ function ReturnPage() {
                 </div>
                 <div className='col-4'></div>
             </div>
+            <div className="text-center m-auto">
+            <Modal
+                className="modal-xl"
+                show={showModal}
+                onHide={handleModalClose}
+                keyboard={false}
+                centered
+            >
+
+                <Modal.Body style={{textAlign:"center"}}>
+                    <div className="d-flex justify-content-between">
+                        <h1 style={{color:"rgb(10, 141, 145)",textAlign:"center"}}>Danh sách vé đã đặt</h1>
+                        <a onClick={() => handleModalClose()}>
+                            <span className="btn btn-success">X
+                            </span>
+                        </a>
+                    </div>
+                    <table className="table table-striped" >
+                        <thead>
+                        <tr style={{color:"rgb(10, 141, 145)"}}>
+                            <th className="">STT</th>
+                            <th className="">Mã đặt vé</th>
+                            <th className="">Số ghế</th>
+                            <th className="">Loại ghế</th>
+                            <th className="">Ngày khởi hành</th>
+                            <th className="">Giờ khởi hành</th>    
+                            <th className="">Đơn giá</th>    
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {tickets.length >0 && tickets.map((i,index)=>{
+                                return(
+                                    <tr key={index}>
+                                        <td>{index+1}</td>
+                                        <td>{i.codeTicket}</td>
+                                        <td>{i.seat.nameSeat}</td>
+                                        <td>{i.seat.typeSeat.nameTypeSeat}</td>
+                                        <td>{moment(i.seat.schedule.dateDeparture).format("DD-MM-YYYY")}</td>
+                                        <td>{i.seat.schedule.timeDeparture}</td>
+                                        <td>{numeral(i.seat.typeSeat.priceSeat).format()} VND</td>
+                                    </tr>
+                                )
+                            })}
+                            
+                        
+                        </tbody>
+                    </table>
+                </Modal.Body>
+            </Modal>
+        </div>
         </div>
     )
 }

@@ -17,8 +17,9 @@ function ForgotCode() {
             const customer = await getCustomerByEmail(email)
             console.log(customer);
             try {
-                setFlag(true)
+                
                 await sendEmail(email)
+                setFlag(true)
                 Swal.fire({
                     icon: "success",
                     timer: 2000,
@@ -54,6 +55,9 @@ function ForgotCode() {
                         <input id='email' type='text' className='form-control'></input>
 
                     </div>
+                    <div className='row'>
+                                    <p style={{color:"#0a8d91",fontWeight:"bold"}}>Lưu ý: Bạn chỉ được hoàn vé trước một giờ tàu chạy.</p>
+                                </div>
                     <div style={{ float: "right" }}>
                         {flag ?
                         <RotatingLines />:
