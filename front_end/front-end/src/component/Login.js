@@ -39,7 +39,7 @@ function Login() {
                   onSubmit={ async(values) => { 
                     try{
                       const data = await login(values);
-                      console.log(data);
+          
                       const token = data.type + " " + data.token;             
                       const role = data.listRoles[0];
                       localStorage.setItem("token",token);

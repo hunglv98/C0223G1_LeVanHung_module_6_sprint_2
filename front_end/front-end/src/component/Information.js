@@ -7,10 +7,17 @@ import { useNavigate } from 'react-router-dom';
 function Information() {
     const navigate = useNavigate()
     const [customer, setCustomer] = useState()
+    const headers = {
+        "Authorization": localStorage.getItem("token")
+    }
     const getCustomerByUser = async () => {
         if (localStorage.getItem("role") == "ROLE_CUSTOMER") {
-            const data = await getCustomerByUsername(localStorage.getItem("username"))
-            setCustomer(data)
+            try {
+                const data = await getCustomerByUsername(localStorage.getItem("username"), headers)
+                setCustomer(data)
+            } catch (e) {
+                navigate("/notFound")
+            }
         } else {
             navigate("/notFound")
         }

@@ -145,12 +145,12 @@ function Content() {
                       inputTime: yup.string().required("Mời nhập vào giờ khởi hành")
                     })}
                     onSubmit={ async(values) => {
-                      console.log(values);
+             
                       const time = values.inputTime
                       const date = values.inputDate
                       let date1 = new Date(date + " " + time);
                       date1.setHours(date1.getHours() + 1)
-                      console.log(date1);
+            
                       if (date1 > Date.now()) {
                         try {
                           const idschedule = await getScheduleByDateAndTime(date, time)

@@ -15,7 +15,6 @@ export const sendEmail =async (email) =>{
 
 export const getTicketByIdCustomer = async(page,id,code,date,time) =>{
     const res = await axios.get(`http://localhost:8080/ticket/history?page=${page}&&idCustomer=${id}&&codeTicket=${code}&&dateDeparture=${date}&&timeDeparture=${time}`)
-    console.log(res.data);
     return res.data
 }
 

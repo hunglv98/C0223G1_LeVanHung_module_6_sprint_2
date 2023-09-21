@@ -47,6 +47,9 @@ function List() {
     }
 
     const checkSchedule = async(id) =>{
+        if(localStorage.getItem("listIdSeat")!=null){
+            localStorage.removeItem("listIdSeat")
+        }
         try{
             const data = await getScheduleById(id)
             setSchedule(data)

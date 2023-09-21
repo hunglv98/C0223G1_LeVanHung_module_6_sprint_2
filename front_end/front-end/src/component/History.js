@@ -16,6 +16,10 @@ function History() {
     const [showModal, setShowModal] = useState(false);
     const [ticket, setTicket] = useState();
 
+    const headers = {
+        "Authorization": localStorage.getItem("token")
+    }
+
     const handleModalClose = () => {
         setShowModal(false);
     };
@@ -24,7 +28,7 @@ function History() {
         try{
             const data = await getTicketByIdTicket(id)
             setTicket(data)
-            console.log(data);
+
         }catch(error){
             Swal.fire({
                 icon:"error",
@@ -56,15 +60,19 @@ function History() {
             //     showConfirmButton: false
             // })
         } else {
-            const data = await getCustomerByUsername(username);
-            setCustomer(data)
+            try{
+                const data = await getCustomerByUsername(username,headers);
+                setCustomer(data)
+            }catch(error){
+                navigate("/notFound")
+            }
+            
         }
     }
     const getListHistory = async () => {
         if (customer) {
             try {
                 const data = await getTicketByIdCustomer(page, customer.idCustomer, code, date, time)
-            
                 setList(data)
                 setTickets(data.content)
             } catch (error) {
@@ -72,7 +80,7 @@ function History() {
             }
         }
     }
-    console.log(tickets);
+
 
     const returnTicket = async (id) => {
         Swal.fire({
@@ -185,7 +193,7 @@ function History() {
                                     return (
                                         <>
                                         <tr class="" key={index}>
-                                            <td scope="row">{list.numberOfElements * page + index + 1}</td>
+                                            <td scope="row">{8 * page + index + 1}</td>
                                             <td>{i.codeTicket}</td>
                                             <td>{moment(i.seat.schedule.dateDeparture).format('DD-MM-YYYY')}</td>
                                             <td>{i.seat.schedule.timeDeparture}</td>

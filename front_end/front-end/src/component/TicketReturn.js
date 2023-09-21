@@ -31,6 +31,12 @@ function TicketReturn() {
             if (res.isConfirmed) {
                 try {
                     await returnTicketById(id)
+                    Swal.fire({
+                        icon:"success",
+                        title:"Hoàn vé thành công, quý khách sẽ được liên hệ sớm để hoàn tiền.",
+                        timer:2000,
+                        showConfirmButton:false
+                    })
 
                 } catch (error) {
                     Swal.fire({
@@ -66,7 +72,6 @@ function TicketReturn() {
                     onSubmit={async (values) => {
                         try {
                             const data = await getTicketFromCode(values.ticketCode, values.telCustommer, values.mailCustomer)
-                            console.log(data);
                             setTicket(data)
                             openModal()
                         } catch (error) {

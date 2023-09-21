@@ -29,7 +29,6 @@ function DetailSeat() {
     const getListId = async () => {
         try {
             const data = await getListSeatById(params.listId)
-            console.log(data);
             setSeats(data)
         }
         catch (error) {
@@ -59,7 +58,6 @@ function DetailSeat() {
         document.title = "Chi tiết đặt vé"
         getListId()
         getCustomerByUser()
-
     }, [])
 
     useEffect(() => {

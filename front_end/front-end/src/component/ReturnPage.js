@@ -37,12 +37,12 @@ function ReturnPage() {
     const getURL = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const responseCode = urlParams.get('vnp_ResponseCode');
-        console.log(responseCode);
+
         setResponseCode(responseCode)
     }
     const getListSeat = () => {
         const listSeat = localStorage.getItem("listIdSeat")
-        console.log(listSeat);
+
         setIdSeats(listSeat)
     }
 
@@ -56,7 +56,7 @@ function ReturnPage() {
                 showConfirmButton: false
             }).then(async () => {
                 const data = await returnFromPayment(localStorage.getItem('username'), idSeats)
-                console.log(data);
+
                 setTickets(data)
             
                 localStorage.removeItem("listIdSeat")

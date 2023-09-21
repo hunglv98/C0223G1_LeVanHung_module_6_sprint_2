@@ -15,11 +15,11 @@ function ForgotCode() {
         const email = document.getElementById("email").value
         try {        
             const customer = await getCustomerByEmail(email)
-            console.log(customer);
+
             try {
-                
-                await sendEmail(email)
                 setFlag(true)
+                await sendEmail(email)
+                
                 Swal.fire({
                     icon: "success",
                     timer: 2000,
@@ -28,6 +28,7 @@ function ForgotCode() {
                 })
                 navigate("/ticketReturn")
             } catch (error) {
+                setFlag(false)
                 Swal.fire({
                     icon: "error",
                     title: "Không tìm thấy mã đặt chỗ theo email này",
