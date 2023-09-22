@@ -169,7 +169,7 @@ function TicketReturn() {
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label className="form-label">Ngày đặt vé: </label>
-                                            <p className='form-control'> {moment(ticket.dateBooking).format("DD-MM-YYYY HH:MM:SS")} </p>
+                                            <p className='form-control'> {moment(ticket.dateBooking).format("DD-MM-YYYY HH:mm:ss")} </p>
                                             <span className="select-arrow" />
                                         </div>
                                     </div>

@@ -41,13 +41,16 @@ function ReturnPage() {
         setResponseCode(responseCode)
     }
     const getListSeat = () => {
+        if(localStorage.getItem("listIdSeat")!=null){
         const listSeat = localStorage.getItem("listIdSeat")
-
-        setIdSeats(listSeat)
+        setIdSeats(listSeat)}else{
+            navigate("/notFound")
+        }
     }
 
 
     const display = () => {
+        if(localStorage.getItem("listIdSeat")!=null){
         if (responseCode == "00") {
             Swal.fire({
                 icon: "success",
@@ -72,13 +75,16 @@ function ReturnPage() {
                 localStorage.removeItem("listIdSeat")
                 // navigate("/")
             })
+        }}else{
+            navigate("/notFound")
         }
     }
 
     useEffect(() => {
         document.title = "Trạng thái giao dịch"
-        getURL()
         getListSeat()
+        getURL()
+        
     }, [])
     useEffect(() => {
         display()

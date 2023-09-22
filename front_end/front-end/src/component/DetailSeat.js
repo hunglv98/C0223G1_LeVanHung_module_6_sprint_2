@@ -23,7 +23,9 @@ function DetailSeat() {
         setShowModal(true);
     };
 
-
+    const headers = {
+        "Authorization": localStorage.getItem("token")
+    }
 
 
     const getListId = async () => {
@@ -48,7 +50,7 @@ function DetailSeat() {
     const getCustomerByUser = async () => {
         if (localStorage.getItem("role") == "ROLE_CUSTOMER") {
             const username = localStorage.getItem("username");
-            const data = await getCustomerByUsername(username);
+            const data = await getCustomerByUsername(username,headers);
             setCustomer(data)
         } else {
             navigate("/notFound")

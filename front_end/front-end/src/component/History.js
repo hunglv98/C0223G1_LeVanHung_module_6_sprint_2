@@ -276,7 +276,7 @@ function History() {
                             
                             <div className='col-6 form-group'>
                                 <label>Ngày đặt vé</label>
-                                <div className='form-control'>{moment(ticket.dateBooking).format("DD-MM-YYYY HH:MM:SS")}</div>
+                                <div className='form-control'>{moment(ticket.dateBooking).format("DD-MM-YYYY HH:mm:ss")}</div>
                             </div>
                             
                             <div className='col-6 form-group'>
